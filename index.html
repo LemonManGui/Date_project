@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Ideas Bucket List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .idea {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Date Ideas Bucket List</h1>
+    <div id="date-ideas"></div>
+    <div>
+        <input id="idea-input" type="text" placeholder="Enter a date idea" />
+        <input id="date-input" type="date" />
+        <button class="button" onclick="addIdea()">Add Idea</button>
+    </div>
+    <script>
+        let ideas = [];
+
+        function displayIdeas() {
+            const container = document.getElementById('date-ideas');
+            container.innerHTML = '';
+            ideas.forEach((idea, index) => {
+                container.innerHTML += `
+                    <div class="idea">
+                        <strong>${idea.idea}</strong> - ${idea.date || "No date planned"} - 
+                        ${idea.completed ? "Completed" : "Pending"} 
+                        <button onclick="markCompleted(${index})">Mark Completed</button>
+                        <button onclick="removeIdea(${index})">Remove</button>
+                    </div>`;
+            });
+        }
+
+        function addIdea() {
+            const ideaInput = document.getElementById('idea-input').value;
+            const dateInput = document.getElementById('date-input').value;
+
+            if (ideaInput) {
+                ideas.push({ idea: ideaInput, date: dateInput, completed: false });
+                document.getElementById('idea-input').value = '';
+                document.getElementById('date-input').value = '';
+                displayIdeas();
+            } else {
+                alert('Please enter a date idea.');
+            }
+        }
+
+        function markCompleted(index) {
+            ideas[index].completed = true;
+            displayIdeas();
+        }
+
+        function removeIdea(index) {
+            ideas.splice(index, 1);
+            displayIdeas();
+        }
+
+        // Initialize with example ideas
+        ideas = [{ idea: "Picnic in the park", date: "2024-12-20", completed: false }];
+        displayIdeas();
+    </script>
+</body>
+</html>
